@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	<insert id="addUserInfo"
+		parameterType="kr.co.partTime.beans.UserBean">
+   <![CDATA[
+   insert into register (reg_num, name, id, pwd, type_num, tel, phoneNum, birth, birthNum, add1, add2, jobNum, email, reg_date)
+   values (register_seq.nextval, #{name, jdbcType=VARCHAR}, #{id}, #{pwd, jdbcType=VARCHAR},  #{type_num}, #{tel}, #{phoneNum}, #{birth}, 
+   #{birthNum}, #{add1, jdbcType=VARCHAR}, #{add2, jdbcType=VARCHAR}, #{jobNum, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{reg_date})
+   ]]>
+	</insert>
+
+
+	<select id="getLoginUserInfo"
+		parameterType="kr.co.partTime.beans.UserBean"
+		resultType="kr.co.partTime.beans.UserBean">
+   <![CDATA[
+   select reg_num, name, type_num
+   from register
+   where id = #{id} and pwd = #{pwd}
+   ]]>
+	</select>
+
+	<!-- 아이디 중복확인 -->
+	<select id="isUserIdExist" parameterType="String"
+		resultType="int">
+   <![CDATA[
+   select count(*) from register where id = #{id}
+   ]]>
+	</select>
+
+	<!-- 이메일 중복확인 -->
+	<select id="isUserEmailExist" parameterType="String"
+		resultType="int">
+   <![CDATA[
+   select count(*) from register where email = #{email}
+   ]]>
+	</select>
+
+
+	<!-- 사업자번호 중복확인 -->
+	<select id="isUserJobNumExist" parameterType="String"
+		resultType="int">
+   <![CDATA[
+   select count(*) from register where jobNum = #{jobNum}
+   ]]>
+	</select>
+
+	<!-- 내정보 가져오기 -->
+	<select id="getModifyUserInfo" parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.EmployFormBean">
+   <![CDATA[ 
+   SELECT r.name, r.tel, r.id, r.pwd, r.email, r.add1, r.add2, e.hourWage, e.employ_date, e.exp_periodstart, e.exp_periodend, e.
+   FROM register r
+   LEFT JOIN employ e ON r.id = e.work_id
+   WHERE r.reg_num = #{reg_num}
+
+   ]]>
+	</select>
+
+	<!-- 내정보 수정 -->
+	<update id="modifyUserInfo"
+		parameterType="kr.co.partTime.beans.UserBean">
+   <![CDATA[
+       update register
+        set name= #{name}, tel = #{tel}, pwd = #{pwd}, email = #{email}, add1 = #{add1}, add2 = #{add2}
+        where reg_num = #{reg_num}
+   ]]>
+
+	</update>
+
+	<select id="getSearchWorker" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.UserBean">
+   <![CDATA[ 
+   select id , reg_num, type_num, name, tel, email, add1, add2 from register
+   where id = #{key}
+   ]]>
+	</select>
+	<select id="getstaffModifyUserInfo"
+		parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.UserBean">
+   <![CDATA[ 
+   select name, tel, email, add1, from register 
+   where reg_num = #{reg_num} 
+   ]]>
+	</select>
+
+	<insert id="addRegWorker"
+		parameterType="kr.co.partTime.beans.EmployBean">
+   <![CDATA[
+      insert into employ (em_num, reg_num, type_num, ceo_id, work_id, staff_number, hourWage, insurance, employ_date, exp_periodstart, exp_periodend)
+      values (employ_seq.nextVAL, #{reg_num}, #{type_num}, #{ceo_id}, #{work_id}, #{staff_number}, #{hourWage}, #{insurance}, SYSDATE, TO_DATE(#{exp_periodstart}, 'YYYY-MM-DD'), TO_DATE(#{exp_periodend}, 'YYYY-MM-DD')) 
+   ]]>
+	</insert>
+
+
+
+	<select id="getNumToId" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+      <![CDATA[
+       select id from register where reg_num = #{reg_num}
+      ]]>
+	</select>
+
+	<!-- 바뀐 조인 코드 -->
+	<select id="getJoinContent" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.EmployBean">
+   <![CDATA[
+ 		select e.staff_number, r.name, e.work_id, e.hourWage, e.employ_date 
+        from employ e, register r
+        where r.id = e.work_id   and e.ceo_id = #{ceo_id}     
+        
+      ]]>
+	</select>
+
+	<!-- 직원 상세보기 (form) -->
+	<select id="getstaffFormWorkId" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.EmployFormBean">
+   <![CDATA[ 
+   select r.name, r.tel, r.email, r.add1, r.add2, e.hourWage, e.employ_date, e.exp_periodstart, e.exp_periodend, e.insurance 
+   from register r
+   join employ e on r.reg_num = e.reg_num
+   where r.id = #{work_id} 
+   ]]>
+	</select>
+
+
+	<!--업데이트 시도 해야 할 mapper (staffFormDetail 데이터 업데이트)(DB확인 완료) -->
+	<update id="setEmployUpdate"
+		parameterType="kr.co.partTime.beans.EmployFormBean">
+   <![CDATA[   
+   update employ set employ_date=#{employ_date}, hourWage=#{hourWage}, exp_periodstart=#{exp_periodstart}, 
+   exp_periodend=#{exp_periodend}, insurance=#{insurance} where work_id = #{work_id}
+   ]]>
+	</update>
+
+
+
+
+	<select id="getCommuteRecord" parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.CommuteBean">
+    <![CDATA[ 
+    select pay, (workOut - workIn) as time
+    from commute
+    where reg_num = #{reg_num} 
+    ]]>
+	</select>
+
+	<!-- 달력 위에 보이는 것 -->
+	<select id="calendarRegister" parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.ScheduleBean">
+		select r.name, e.staff_number, s.sch_workDate
+		from register
+		r, employ e, schedule s
+		where e.staff_number=#{staff_number} and
+		r.reg_num=s.reg_num
+
+	</select>
+
+	<!--달력 모달 직원 리스트 -->
+	<select id="getStaffList" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.ScheduleBean">
+   <![CDATA[ 
+	select r.reg_num, r.name, r.type_num, e.work_id, e.staff_number
+    from register r
+    join employ e on r.id = e.work_id
+    where e.ceo_id = #{ceo_id}
+]]>
+	</select>
+
+	<!-- 달력 직원 정보 불러오기 -->
+	<select id="getStaffDetails" parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.ScheduleBean">
+    <![CDATA[
+        select r.id, r.type_num, e.staff_number, r.name
+        from register r
+        join employ e ON r.id = e.work_id
+        where r.reg_num = #{reg_num}
+    ]]>
+	</select>
+
+	<!-- 달력 스케줄 등록 -->
+	<insert id="addSchedule"
+		parameterType="kr.co.partTime.beans.ScheduleBean">
+   <![CDATA[
+   insert into schedule(schedule_num, reg_num, type_num, ceo_id, work_id, staff_number, name, sch_workDate, sch_workTime, sch_workEndTime, sch_restTime, color, memo, restDate)
+   values (schedule_num_seq.nextval, #{reg_num}, #{type_num}, #{ceo_id}, #{work_id}, #{staff_number}, #{name}, TO_DATE(#{sch_workDate}, 'YYYY-MM-DD' )), TO_TIMESTAMP(#{sch_workTime}, 'YYYY-MM-DD HH24:MI:SS')),  TO_TIMESTAMP(#{sch_workEndTime}, 'YYYY-MM-DD HH24:MI:SS')),  #{sch_restTime}, #{color}, #{memo}, #{restDate})
+     ]]>
+	</insert>
+
+	<!-- 달력 db에서 가지고 오기 -->
+	<select id="getContentList" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.ScheduleBean">
+   <![CDATA[ 
+      select name, sch_workDate, sch_workTime, sch_workEndTime
+      from schedule
+      where ceo_id =#{ceo_id}
+   ]]>
+	</select>
+
+	<!-- 달력 위에 표기 -->
+	<select id="getSchedules"
+		resultType="kr.co.partTime.beans.ScheduleBean">
+   <![CDATA[
+      select schedule_num, reg_num, type_num, ceo_id, work_id, staff_number, name, TO_CHAR(sch_workDate, 'YYYY-MM-DD') AS sch_workDate,
+           to_char(sch_workTime, 'HH24:MI:SS') AS sch_workTime,
+           to_char(sch_workEndTime, 'HH24:MI:SS') AS sch_workEndTime,
+           sch_restTime, color, memo, restDate
+      FROM schedule
+   ]]>
+	</select>
+
+	<!-- qr 출퇴근 -->
+
+	<insert id="setQrCommute"
+		parameterType="kr.co.partTime.beans.CommuteBean">
+   <![CDATA[      
+      insert into commute (commute_num, ceo_id, work_id, staff_number, reg_num, type_num, workIn) 
+      values (commute_seq.Nextval, #{ceo_id}, #{work_id}, #{staff_number}, #{reg_num}, #{type_num}, TO_TIMESTAMP(#{workIn}, 'YYYY-MM-DD HH24:MI:SS')) 
+   ]]>
+	</insert>
+
+
+	<select id="getStaffNumber"
+		parameterType="kr.co.partTime.beans.CommuteBean"
+		resultType="java.lang.String">
+   <![CDATA[
+    select staff_number
+    from employ
+    where work_id = #{work_id} and ceo_id = #{ceo_id}
+   ]]>
+	</select>
+
+	<update id="updateCommute"
+		parameterType="kr.co.partTime.beans.CommuteBean">      
+   <![CDATA[
+   update commute set workOut = #{workOut} where work_id=#{work_id}  and ceo_id=#{ceo_id} and staff_number =#{staff_number}
+   ]]>
+	</update>
+
+
+
+	<!-- 이력 페이지 이름 가져오기 -->
+	<select id="getResumeInfo" parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.UserBean">
+   <![CDATA[ 
+   select name from register 
+   where reg_num = #{reg_num} 
+   ]]>
+	</select>
+
+
+	<!-- 이력 정보 등록 -->
+	<insert id="addResumeInfo"
+		parameterType="kr.co.partTime.beans.ResumeAddBean">
+    <![CDATA[
+    INSERT INTO resume (history_num, type_num, reg_num, comName, todo, past_join_date, past_leaveDate)
+    VALUES (resume_seq.NEXTVAL, #{type_num}, #{reg_num}, #{comName}, #{todo}, TO_DATE(#{past_join_date}, 'YYYY/MM/DD'), TO_DATE(#{past_leaveDate}, 'YYYY/MM/DD'))
+    ]]>
+	</insert>
+
+
+	<!-- 이력 정보 카드형태로 불러오기 -->
+	<select id="getResumeContent" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.ResumeAddBean">
+   <![CDATA[
+   select rr.name, re.comName, re.todo, re.past_join_date, re.past_leaveDate, re.history_num
+   from resume re
+   join register rr on rr.reg_num = re.reg_num
+   where rr.id = #{id}
+   ]]>
+	</select>
+
+	<!-- 경력 정보 불러오기 -->
+	<select id="getModifyResumeInfo"
+		parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.ResumeAddBean">
+    <![CDATA[
+    select rr.name, re.comName, re.todo, re.past_join_date, re.past_leaveDate
+    from resume re 
+    join register rr on rr.reg_num = re.reg_num
+    where re.history_num = #{history_num}
+    ]]>
+	</select>
+
+	<!-- 경력 정보 수정 -->
+	<update id="updateResumeInfo"
+		parameterType="kr.co.partTime.beans.ResumeAddBean">
+    <![CDATA[
+    UPDATE resume 
+     SET 
+        comName = #{comName}, 
+        todo = #{todo}, 
+        past_join_date = TO_DATE(#{past_join_date}, 'YYYY/MM/DD'),
+        past_leaveDate = TO_DATE(#{past_leaveDate}, 'YYYY/MM/DD') 
+     WHERE 
+         reg_num = #{reg_num} 
+     ]]>
+	</update>
+
+
+	<!-- 수습직원 -->
+	<select id="getExpContent" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.EmployFormBean">
+    <![CDATA[
+        SELECT *
+        FROM (
+             SELECT r.name, e.employ_date, e.exp_periodend, e.work_id
+            FROM employ e
+            JOIN register r ON r.id = e.work_id
+            WHERE e.ceo_id = #{ceo_id}
+            ORDER BY e.employ_date DESC
+        )
+        WHERE ROWNUM <= 2
+    ]]>
+	</select>
+
+
+	<select id="getExpUserInfo" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.EmployFormBean">
+    <![CDATA[ 
+        select r.name, e.employ_date, e.exp_periodstart, e.exp_periodend, s.sch_workDate, s.schedule_num
+        from employ e, register r, schedule s
+        where r.id = e.work_id and e.work_id = s.work_id
+        and r.id = #{work_id}   
+    ]]>
+	</select>
+
+	<!-- setExpUpdate: 근무 스케줄의 근무 날짜를 업데이트하는 쿼리 - update 문은 schedule_num에 해당하는 
+		레코드의 sch_workDate를 입력된 #{sch_workDate} 값으로 변경합니다. -->
+	<update id="setExpUpdate"
+		parameterType="kr.co.partTime.beans.EmployFormBean">
+    <![CDATA[
+        update schedule set sch_workDate = #{sch_workDate} where schedule_num = #{schedule_num}     
+    ]]>
+	</update>
+
+	<select id="getSearchStaff" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.ScheduleBean">
+    <![CDATA[
+    select s.reg_num, s.type_num, e.staff_number, s.work_id
+    from schedule s
+    join employ e on s.work_id = e.work_id
+    where e.work_id = #{key}
+    ]]>
+	</select>
+
+
+	<select id="getPayContent" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.CommuteBean">
+   <![CDATA[
+   SELECT TO_CHAR(workIn, 'MM/DD') || '/' || TO_CHAR(workIn, 'DY')as workin_date, TO_CHAR(workIn, 'HH24:MI:SS')as workin_time, 
+   TO_CHAR(workOut, 'YY-MM-DD')as workout_date, TO_CHAR(workOut, 'HH24:MI:SS')as workout_time
+   from commute
+   where work_id = #{work_id}
+   ]]>
+	</select>
+
+
+</mapper>

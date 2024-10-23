@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<insert id="addContentInfo"
+		parameterType="kr.co.partTime.beans.ContentBean">
+
+		<selectKey keyProperty="content_idx" order="BEFORE"
+			resultType="java.lang.Integer">
+			select content_seq.nextval from dual
+		</selectKey>
+   
+      <![CDATA[
+         insert into content_table(content_idx, content_subject, content_text,
+         content_file, content_writer_idx, content_board_idx, content_date)
+         values (#{content_idx}, #{content_subject}, #{content_text}, #{content_file, jdbcType=VARCHAR},
+         #{content_writer_idx}, #{content_board_idx}, sysdate)
+      ]]>
+	</insert>
+
+	<select id="getBoardInfoName" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+      <![CDATA[
+         select board_info_name 
+         from board_info_table 
+         where board_info_idx = #{board_info_idx}
+      ]]>
+	</select>
+
+
+
+	<select id="getJoinContent" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.EmployBean">
+   <![CDATA[
+   select e.staff_number, r.name, e.work_id, e.hourWage, e.employ_date 
+           from employ e, register r
+           where r.id = e.work_id
+            and e.ceo_id = (
+   select id from employ where ceo_id = #{ceo_id} 
+   )
+    ]]>
+	</select>
+
+
+	<select id="getContentList" parameterType="java.lang.Integer"
+		resultType="kr.co.partTime.beans.ContentBean">
+      <![CDATA[
+         SELECT DISTINCT e.staff_number, r.name, e.hourWage, c.holiday_pay, c.etc, c.workTime, c.pay, r.id  
+	FROM employ e
+	JOIN register r ON r.id = e.work_id
+	JOIN commute c ON c.staff_number = e.staff_number 
+	WHERE e.ceo_id = (
+    SELECT id FROM register WHERE reg_num = #{reg_num}
+)
+
+
+      ]]>
+	</select>
+
+	<select id="getSalaryFormBoard" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.CommuteBean">
+    <![CDATA[     
+      select r.id, r.name, e.hourWage, e.insurance, c.holiday_pay, c.etc, c.workTime, c.workTime1, c.workTime2, c.workTime3, c.workTime4, c.workTime5, c.pay1, c.pay2, c.pay3, c.pay4, c.pay5, c.pay  
+      from register r 
+      join employ e on r.id=e.work_id
+      join commute c on e.reg_num = c.reg_num
+      where id = #{id}
+    ]]>
+	</select>
+
+	<update id="salaryFormBoard"
+		parameterType="kr.co.partTime.beans.ContentBean">
+   <![CDATA[
+      update commute
+      set holiday_pay = #{holiday_pay}, etc = #{etc}, pay=#{pay}
+      where work_id=#{work_id}
+   ]]>
+	</update>
+
+
+	<!-- key 값 불러오기 -->
+	<select id="getSearchWorker" parameterType="java.lang.String"
+		resultType="kr.co.partTime.beans.CommuteBean">
+   <![CDATA[ 
+   select r.id , r.name, r.reg_num, r.type_num, c.workIn, c.workOut, c.commute_num
+   from commute c, register r
+   where r.reg_num = c.reg_num and id = #{key}
+   ]]>
+	</select>
+
+	<!-- 급여 상세보기 업데이트 -->
+	<update id="updatePaycommuteBean"
+		parameterType="kr.co.partTime.beans.CommuteBean">
+    <![CDATA[
+    update commute 
+    set workIn = TO_TIMESTAMP(#{workIn}, 'YYYY-MM-DD HH24:MI:SS'), 
+        workOut = TO_TIMESTAMP(#{workOut}, 'YYYY-MM-DD HH24:MI:SS')
+    where commute_num = #{commute_num} 
+    ]]>
+	</update>
+
+
+	<select id="getNumToId" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+      <![CDATA[
+       select id from register where reg_num = #{reg_num}
+      ]]>
+	</select>
+
+</mapper>

@@ -1,0 +1,191 @@
+﻿@charset "utf-8";
+
+* {
+
+margin : 0 ;
+
+padding : 0 ;
+
+font-family: 'MangoDdobak-B';
+
+font-size : 16px ;
+
+color : #333 ;
+
+}
+
+
+
+
+@font-face  {
+    font-family: 'MangoDdobak-B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+fieldset {
+
+border :0 ;
+
+}
+
+table {
+
+border-collapse : collapse ;
+
+/* 테두리 사이의 간격없애기 */
+
+}
+
+caption {
+
+position : absolute ;
+
+left :9999em ;
+
+}
+
+body {
+
+
+
+}
+
+#join_wrap {
+
+width : 800px ;
+
+margin : 0 auto ;
+
+}
+
+#join_wrap .title {
+
+padding :50px 0 20px ;
+
+font-size :2em ;
+
+font-weight : 700 ;
+
+}
+
+.joinTable th , .joinTable td {
+
+padding :10px ;
+
+box-sizing : border-box ;
+
+border-bottom : 1px solid #ddd ;
+
+}
+
+.joinTable th {
+
+width : 180px ;
+
+text-align : left ;
+
+background-color : #f5f5f5 ;
+
+}
+
+.joinTable td {
+
+width : 620px ;
+
+}
+
+.joinTable .first {
+
+border-top : 2px solid #333 ;
+
+}
+
+.joinTable .textForm {
+
+width : 420px ;
+
+height : 42px ;
+
+border :1px solid #ddd ;
+
+border-radius : 5px ;
+
+padding :0px 10px ;
+
+box-sizing : border-box ;
+
+}
+
+/* 중복확인 */
+
+.joinTable .btn {
+
+width : 80px ;
+
+height : 42px ;
+
+background-color : #091d53 ;
+
+border :0 ;
+
+border-radius : 5px ;
+
+color :#fff ;
+
+}
+
+/* 텍스트에리어 */
+
+.joinTable .textarea {
+
+width : 420px ;
+
+height : 80px ;
+
+border :1px solid #ddd ;
+
+border-radius : 5px ;
+
+padding :10px ;
+
+box-sizing : border-box ;
+
+/* 테두리의 두께를 포함한 크기를 지정 */
+
+}
+
+/* 버튼 */
+
+.btn_area {
+
+text-align :center ;
+
+margin : 30px 0 ;
+
+}
+
+.btn_area button {
+
+width : 200px ;
+
+height : 72px ;
+
+margin : 0 10px ;
+
+border :0 ;
+
+font-size : 20px ;
+
+}
+
+.btn_area .btn_join {
+
+background-color : #091d53 ;
+
+color :#fff ;
+
+}
+

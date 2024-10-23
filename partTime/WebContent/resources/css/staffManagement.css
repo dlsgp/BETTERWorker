@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: 'MangoDdobak-B';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+* {
+	font-family: 'MangoDdobak-B';
+	font-size: 20px;
+}
+
+.tableHead {
+   background-color: #2e294e !important;
+   color: white;
+}
+
+th, tr, td{
+	text-align: center;
+	justify-content: center;
+	align-content: center;
+}
+
+.table {
+   width: 100%; /* 테이블 너비를 100%로 설정 */
+   margin-bottom: 1rem; /* 테이블 아래 여백 추가 */
+}
+
+th, td {
+   padding: 0.75rem; /* 셀 패딩 조정 */
+   text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.paginationButton {
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   align-items: center;
+}
+
+.main_container {
+   width: 100%;
+   padding: 20px;
+}
+
+.card {
+   margin: 15px; /* 카드 간의 간격을 늘림 */
+   font-family: 'MangoDdobak-B';
+	font-size: 20px;
+}
+
+.form-check {
+   display: block; /* 블록 요소로 변경 */
+   margin-bottom: 20px; /* 체크박스 간 간격 추가 */
+   align-items: center;
+}
+
+.card-content {
+   margin-top: 10%;
+}
+
+@media ( max-width : 768px) {
+   .table-controls {
+      flex-direction: column;
+   }
+   .search-container {
+      width: 100%;
+      margin-top: 10px;
+   }
+   .sort-dropdown {
+      width: 100%;
+      margin-bottom: 10px;
+   }
+   .form-check {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+   }
+}
+
+@media ( min-width : 769px) {
+   .table-controls {
+      flex-direction: row;
+   }
+   .search-container {
+      margin-left: 10px;
+   }
+}

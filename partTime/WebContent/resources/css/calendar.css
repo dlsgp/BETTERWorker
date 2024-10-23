@@ -1,0 +1,27 @@
+@font-face {
+   font-family: 'MangoDdobak-B';
+   src:
+      url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2')
+      format('woff2');
+   font-weight: 700;
+   font-style: normal;
+}
+
+* {
+   background-color: #ffffff;
+   font-family: 'MangoDdobak-B';
+   font-size: 20px;
+}
+
+.calendar-container {
+   max-width: 800px; /* 최대 너비 설정 */
+   margin: 0 auto; /* 중앙 정렬 */
+}
+
+.day {
+   height: 100px; /* 날짜 셀 높이 */
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: 1px solid #dee2e6; /* 셀 경계 */
+}

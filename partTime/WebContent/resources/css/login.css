@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'MangoDdobak-B';
+	font-size: 16px;
+	color: #333;
+}
+
+/* extra small */
+@media screen and (max-width: 576px) {
+	.container{
+		width: 100px;
+	}
+}
+
+.line-login {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+}
+
+.line-login::before, .line-login::after {
+	content: "";
+	flex: 1;
+	height: 2px;
+	background: #ccc;
+}
+
+.line-login span {
+	z-index: 1;
+	position: relative;
+}
+
+.icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon img {
+    margin: 0 20px;
+}
+
+.form-group.text-left {
+    text-align: left;
+    margin-top: -10px; 
+}

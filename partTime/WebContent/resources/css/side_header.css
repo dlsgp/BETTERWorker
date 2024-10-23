@@ -1,0 +1,102 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: 'MangoDdobak-B';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2')
+		format('woff2');
+	font-weight: 400;
+	font-style: normal;
+}
+
+* {
+	font-size: 16px;
+	font-family: 'MangoDdobak-B';
+	margin: 0;
+	padding: 0;
+}
+
+.defaultHeader, .buttonHeader{
+	background-color: #ffffff !important;
+}
+
+.sidebarContent {
+	margin-top: 100px;
+}
+
+#title {
+	flex-direction: column;
+}
+
+#contentBody {
+	flex-direction: column;
+	margin-top: 50px;
+}
+
+/* 768이하일 때 버튼나오게 */
+@media ( max-width : 768px) {
+	.buttonHeader {
+		display: block;
+	}
+}
+/* 769이상일 때 버튼 안나오게 */
+@media ( min-width : 769px) {
+	.buttonHeader {
+		display: none;
+	}
+}
+
+/* 768이하일 때 사이드 바 안나오게 */
+@media ( max-width : 768px) {
+	.defaultHeader {
+		display: none;
+		align-self: flex-start;
+	}
+}
+/* 769이상일 때 버튼 안나오게 */
+@media ( min-width : 769px) {
+	.defaultHeader {
+		display: block;
+	}
+}
+
+.nav-link-mypage {
+	font-weight: bold;
+	font-size: 24px;
+	padding-top: 20px;
+	margin-top: 40px;
+}
+
+.nav-link {
+	color: black !important;
+	margin-bottom: 30px;
+	transition: color 0.3s ease;
+}
+
+.nav-link i {
+	margin-right: 15px;
+}
+
+.nav-item {
+	margin: 0 30px;
+}
+
+.nav-link:hover {
+	color: #FFBD00 !important;
+}
+
+.nav-link-mypage:hover {
+	color: #2E294E !important;
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 100%;
+	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}

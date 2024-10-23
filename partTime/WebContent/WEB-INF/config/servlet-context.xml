@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xmlns:context="http://www.springframework.org/schema/context"
+			 xsi:schemaLocation="http://www.springframework.org/schema/mvc
+				 http://www.springframework.org/schema/mvc/spring-mvc.xsd
+				 http://www.springframework.org/schema/beans
+				 http://www.springframework.org/schema/beans/spring-beans.xsd
+				 http://www.springframework.org/schema/context
+				 http://www.springframework.org/schema/context/spring-context.xsd">
+			 					 				
+	<annotation-driven />
+	<context:component-scan base-package="kr.co.partTime.controller"></context:component-scan>
+	<context:component-scan base-package="kr.co.partTime.beans"></context:component-scan>
+	<context:component-scan base-package="kr.co.partTime.dao"></context:component-scan>
+	<context:component-scan base-package="kr.co.partTime.service"></context:component-scan>
+	<context:component-scan base-package="kr.co.partTime.interceptor"></context:component-scan>
+	
+	
+	<resources location="/resources/" mapping="/**"></resources>
+
+
+<!-- properties파일의 내용을 사용할 수 있도록 Bean를 정의 -->
+<beans:bean class='org.springframework.beans.factory.config.PropertyPlaceholderConfigurer'>
+		<beans:property name="locations">
+			<beans:list>
+				<beans:value>/WEB-INF/properties/db.properties</beans:value>
+				<beans:value>/WEB-INF/properties/option.properties</beans:value>
+			</beans:list>		
+		</beans:property>
+</beans:bean>
+
+<beans:bean class='org.apache.commons.dbcp2.BasicDataSource' id='basic_data_source'>
+<beans:property name='driverClassName' value='${db.classname}'/>
+<beans:property name="url" value="${db.url}"/>
+<beans:property name="username" value='${db.username}'/>
+<beans:property name="password" value='${db.password}'/>
+</beans:bean>
+
+<beans:bean class='org.mybatis.spring.SqlSessionFactoryBean' id='sqlSession'>
+<beans:property name="dataSource" ref='basic_data_source'/>
+<beans:property name="mapperLocations" value='/WEB-INF/mapper/*.xml'/>
+</beans:bean>
+<beans:bean class='org.mybatis.spring.SqlSessionTemplate' >
+<beans:constructor-arg index='0' ref='sqlSession'/>
+</beans:bean>
+
+
+<interceptors>
+<interceptor>
+<mapping path="/**"/>
+<beans:bean class="kr.co.partTime.interceptor.TopMenuInterceptor"/>
+</interceptor>
+
+</interceptors>
+
+<beans:bean class='org.springframework.web.multipart.support.StandardServletMultipartResolver'
+			    id='multipartResolver'/>
+</beans:beans>
+
+
+	

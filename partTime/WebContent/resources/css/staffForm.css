@@ -1,0 +1,154 @@
+@font-face {
+	font-family: 'MangoDdobak-B';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+* {
+	background-color: #ffffff;
+	font-family: 'MangoDdobak-B';
+	font-size: 20px;
+}
+
+h1 {
+	color: #343a40;
+}
+
+.container {
+	flex: 1;
+	background-color: #ffffff;
+}
+
+.col-md-9 {
+	background-color: #ffffff;
+	border-radius: 8px;
+	border-width: 0;
+	border-color: #ffffff;
+	border-radius: 8px;
+	padding: 20px;
+}
+
+.form-group {
+	font-size: 16px;
+	margin-top: 10px;
+	background-color: #ffffff;
+}
+
+.form-group-postcode {
+	font-size: 16px;
+	margin-top: 10px;
+	background-color: #ffffff;
+	align-items: stretch;
+}
+
+.calendar-form-group {
+	font-size: 20px;
+	background-color: #ffffff;
+}
+
+.input-group {
+	margin-bottom: 20px;
+	background-color: #ffffff;
+}
+
+.input-group-find, .input-group-detail {
+	margin-left: 10px; /* 버튼과 상세주소 간의 간격 설정 */
+}
+
+.profile-image {
+	width: 150%;
+	height: auto;
+}
+
+.button-container {
+	margin-top: 10px;
+}
+
+.input-group-calender-icon .btn {
+	background-color: transparent;
+	color: #000;
+	border: 1px solid #ccc;
+}
+/* .input-group-calender-icon .btn:hover {
+    background-color: #2E294E;
+    color: #fff; 
+}*/
+
+/* .input-group-calender-icon .btn:active {
+    background-color: #2E294E;
+    color: #fff;
+} */
+.input-group-find-icon .btn {
+	background-color: transparent;
+	color: #000;
+	border: 1px solid #ccc;
+}
+
+.input-group-find-icon .btn:hover {
+	background-color: #2E294E;
+	color: #fff;
+}
+
+.input-group-find-icon .btn:active {
+	background-color: #2E294E;
+	color: #fff;
+}
+
+/* 768px 이하 */
+@media ( max-width : 576px) {
+	.col-md-9 {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	.profile-image {
+		max-width: 100px;
+	}
+	.calendar-form-group {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch; /* 요소를 늘려서 정렬 */
+	}
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start; /* 왼쪽 정렬 */
+	}
+	.button-container {
+		margin-top: 10px; /* 버튼과 위 요소 간격 조정 */
+	}
+	.input-group {
+		width: 100%; /* 입력 그룹의 폭을 전체로 설정 */
+	}
+	/* .form-control {
+		align-items: stretch;
+		display: flex;
+		flex-direction: column;
+	} */
+}
+
+/* 768px ~ 1024px */
+@media ( min-width : 768px) and (max-width: 1024px) {
+	.col-md-9 {
+		margin: 0 auto;
+	}
+	.profile-image {
+		max-width: 150px; /* 필요에 따라 조정 */
+	}
+	.calendar-form-group {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.input-group {
+		width: 100%; /* 입력 그룹의 폭을 전체로 설정 */
+	}
+	
+}
+
+.modalButton{
+	display: flex;
+	justify-content: flex-end;
+}

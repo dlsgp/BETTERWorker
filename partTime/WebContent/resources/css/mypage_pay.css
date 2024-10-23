@@ -1,0 +1,76 @@
+@charset "utf-8";
+
+@font-face {
+   font-family: 'MangoDdobak-B';
+   src:
+      url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2')
+      format('woff2');
+   font-weight: 400;
+   font-style: normal;
+}
+
+* {
+   font-size: 16px;
+   font-family: 'MangoDdobak-B';
+   margin: 0;
+   padding: 0;
+}
+.fa-chevron-left, .fa-chevron-right {
+    cursor: pointer; /* 클릭 가능한 아이콘으로 설정 */
+}
+h6 {
+   text-align: center; /* 이 요소의 가로 공간을 기준으로 텍스트를 가운데 정렬시킴 */
+   line-height: 200px; /* 이 요소의 텍스트를 기준으로 위 아래 기준 텍스트를 가운데 정렬시킴 */
+}
+
+.sidebarContent {
+   margin-top: 100px;
+}
+
+#title {
+   flex-direction: column;
+}
+
+#contentBody {
+   flex-direction: column;
+   margin-top: 50px;
+}
+
+.form-group {
+   margin-top: 20px;
+}
+
+.btn {
+   padding: 5px 10px;
+   color: white;
+   border: none;
+   cursor: pointer;
+}
+
+/* 768이하일 때 버튼나오게 */
+@media ( max-width : 768px) {
+   .buttonHeader {
+      display: block;
+   }
+}
+/* 769이상일 때 버튼 안나오게 */
+@media ( min-width : 769px) {
+   .buttonHeader {
+      display: none;
+   }
+}
+
+/* 768이하일 때 사이드 바 안나오게 */
+@media ( max-width : 768px) {
+   .defaultHeader {
+      display: none;
+   }
+}
+/* 769이상일 때 사이드바 안나오게 */
+@media ( min-width : 769px) {
+   .defaultHeader {
+      display: block;
+   }
+}
+
+

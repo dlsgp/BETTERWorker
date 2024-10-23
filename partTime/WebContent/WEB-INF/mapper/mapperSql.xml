@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test_db">
+	<insert id="insert_data"
+		parameterType="kr.co.partTime.beans.UserBean">
+<![CDATA[
+
+insert into register (reg_num, type_num, name, id, pwd, tel, phoneNum, birthNum, birth, jobNum, email, add1, user_manager, userIdExist, userLogin) 
+values (#{reg_num}, #{type_num}, #{name}, #{id}, #{pwd}, #{tel}, #{phoneNum}, #{birthNum}, #{birth}, #{jobNum}, #{email, jdbcType=VARCHAR}, #{add1, jdbcType=VARCHAR}, #{user_manager}, #{userIdExist}, #{userLogin})
+
+]]>
+	</insert>
+
+	<select id='select_data'
+		resultType="kr.co.partTime.beans.UserBean">
+<![CDATA[
+select id, name, pw, reg_num from register
+]]>
+	</select>
+
+	<update id='update_data'
+		parameterType="kr.co.partTime.beans.UserBean">
+<![CDATA[
+update register set name=#{name, jdbcType=VARCHAR}, tel=#{tel}, email=#{email, jdbcType=VARCHAR}, add1=#{add1} where reg_num = #{reg_num, jdbcType=INTEGER}
+]]>
+	</update>
+
+	<delete id='delete_data'
+		parameterType="kr.co.partTime.beans.UserBean">
+<![CDATA[
+delete from register where id =  #{id} 
+]]>
+	</delete>
+
+</mapper>

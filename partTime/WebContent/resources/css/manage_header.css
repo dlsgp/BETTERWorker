@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+* {
+   font-size: 16px;
+   font-family: 'MangoDdobak-B';
+   color: white;
+}
+
+.navbar {
+   justify-content: center;
+   background-color: #2e294e;
+   box-shadow: 1px #e5e5e5;
+}
+
+.nav-pills {
+   justify-content: center;
+}
+
+.nav-item {
+   margin: 0 50px;
+}
+
+.nav-link {
+   color: white !important;
+}
+
+/* @media ( min-width : 768px) {
+   .navbar-toggler {
+      display: none; 768px 이상에서는 토글 버튼 숨김
+   }
+   .navbar-collapse {
+      display: flex !important; 항상 보이게
+   }
+}
+ */
+
+/* 768이하일 때 버튼나오게 */
+@media ( max-width : 767px) {
+   .navbar-toggler {
+      display: block;
+   }
+}
+   /* 769이상일 때 버튼 안나오게 */
+@media ( min-width : 768px) {
+   .navbar-toggler {
+         display: none;
+      }
+   
+}
+
+/* 768이하일 때 사이드 바 안나오게 */
+@media ( max-width : 767px) {
+   .navbar-collapse {
+      display: none;
+   }
+}
+   /* 769이상일 때 사이드 바 안나오게 */
+@media ( min-width : 768px) {
+   .navbar-collapse {
+         display: block;
+      }
+   
+}

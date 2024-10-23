@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 코드 스캐너</title>
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+</head>
+<body>
+    <h1>QR 코드 스캐너</h1>
+    <p>스캔한 결과: <span id="result"></span></p>
+    <video id="video" width="300" height="200" autoplay></video>
+    <script>
+        const codeReader = new ZXing.BrowserQRCodeReader();
+        
+        // 카메라 접근 요청
+        codeReader.getVideoInputDevices()
+            .then((videoInputDevices) => {
+                const firstDeviceId = videoInputDevices[0].deviceId; // 첫 번째 카메라 선택
+                codeReader.decodeFromVideoDevice(firstDeviceId, 'video', (result, err) => {
+                    if (result) {
+                        document.getElementById('result').textContent = result.text;
+                    }
+                    if (err && !(err instanceof ZXing.NotFoundException)) {
+                        console.error(err);
+                    }
+                });
+            })
+            .catch(err => console.error('카메라 접근 오류:', err));
+    </script>
+</body>
+</html>
